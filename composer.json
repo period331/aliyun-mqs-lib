@@ -1,0 +1,23 @@
+{
+    "name": "baocaixiong/aliyun-mqs",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "monolog/monolog": "~1.12",
+        "nategood/httpful": "0.2.*",
+        "openlss/lib-array2xml": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "baocaixiong",
+            "email": "baocaixiong@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"Mqs\\": "src/Mqs"},
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "minimum-stability": "stable"
+}

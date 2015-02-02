@@ -1,7 +1,6 @@
 <?php
 
 namespace Mqs\Requests;
-use Mqs\Account;
 
 /**
  * Class ListQueue
@@ -27,24 +26,46 @@ class ListQueue extends BaseRequest
     protected $requestResource = '/';
 
     /**
-     * @param \Mqs\Account $account
      * @param string $prefix
+     * @return $this
      */
-    public function __construct(Account $account, $prefix = '')
+    public function prefix($prefix)
     {
-        parent::__construct($account);
+        $this->specificHeaders['x-mqs-prefix'] = $prefix;
 
-        $this->prefix = $prefix;
+        return $this;
     }
 
     /**
-     * 添加特有的 request headers
+     * @param int $number
+     * @return $this
      */
-    protected function makeSpecificHeaders()
+    public function retNumber($number)
     {
-        parent::makeSpecificHeaders();
+        $this->specificHeaders['x-mqs-ret-number'] = $number;
 
-        $this->prefix and $this->httpful->addHeader('x-mqs-prefix', $this->prefix);
+        return $this;
     }
 
+    /**
+     * @param string $marker
+     * @return $this
+     */
+    public function marker($marker)
+    {
+        $this->specificHeaders['x-mqs-ret-number'] = $marker;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $bool
+     * @return $this
+     */
+    public function withMeta($bool)
+    {
+        $this->specificHeaders['x-mqs-with-meta'] = $bool ? 'true' : 'false';
+
+        return $this;
+    }
 }

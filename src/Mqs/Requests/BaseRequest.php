@@ -3,7 +3,6 @@
 namespace Mqs\Requests;
 use Httpful\Response;
 use LSS\Array2XML;
-use LSS\XML2Array;
 use Mqs\Account;
 use Httpful\Request;
 use Mqs\Mqs;
@@ -40,21 +39,29 @@ abstract class BaseRequest
     protected $payload = [];
 
     /**
-     * construct method
+     * @var array
+     */
+    protected $specificHeaders = [
+        'x-mqs-version' => Mqs::VERSION
+    ];
+
+    /**
+     * @var string
+     */
+    protected $queueName;
+
+    /**
      * @param Account $account
      */
-    public function __construct(Account $account)
+    public function initAccount(Account $account)
     {
         $this->account = $account;
-        $method = strtolower($this->method);
-
-        $this->httpful = Request::$method($this->account->getSchemeHost().$this->requestResource);
     }
 
     /**
      * @param array $attributes
      */
-    public function params (array $attributes = [])
+    public function params(array $attributes = [])
     {
         foreach ($attributes as $key => $attribute) {
             $setter = 'set'.studly_case($key);
@@ -68,33 +75,24 @@ abstract class BaseRequest
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     * @return $this
+     * 发送http请求
+     *
+     * @return Response|string
      */
-    public function addHeader($key, $value)
-    {
-        $this->httpful->addHeader($key, $value);
-
-        return $this;
-    }
-
-    /**
-     * @param array $headers
-     * @return $this
-     */
-    public function addHeaders(array $headers)
-    {
-        $this->httpful->addHeaders($headers);
-        return $this;
-    }
-
     public function send()
     {
+        !$this->httpful and $this->httpful = Request::init($this->method);
+
         $payload = '';
+        $uri = $this->account->getSchemeHost().$this->requestResource;
+
         if (in_array($this->httpful->method, ['POST', 'PUT'])) {
             $payload = $this->makePayload();
+        } else {
+            $uri .= '?'.http_build_query($this->payload);
         }
+
+        $this->httpful->uri($uri);
 
         $this->httpful->addHeader('Content-Length', strlen($payload));
         $this->httpful->addHeader('Content-MD5', base64_encode(md5($payload)));
@@ -120,11 +118,22 @@ abstract class BaseRequest
   <RequestId>0</RequestId>
   <HostId>%s</HostId>
 </Error>
+
 EOF
             , $e->getCode(), $e->getMessage().'; FILE: '.$e->getFile().'; LINE: '.$e->getLine(), $this->account->getSchemeHost())
-            , "HTTP/1.1 400 OK\r\nServer: MOCK-SERVER\r\nContent-Type: text/xml;charset=utf-8\r\nx-mqs-request-id: 0",
-            $this->httpful
+            ,"HTTP/1.1 400 OK\r\nServer: MOCK-SERVER\r\nContent-Type: text/xml;charset=utf-8\r\nx-mqs-request-id: 0",
+                $this->httpful
             );
+        }
+    }
+
+    /**
+     * 添加特有的 request headers
+     */
+    protected function makeSpecificHeaders()
+    {
+        foreach ($this->specificHeaders as $header => $value){
+            $header and $this->httpful->addHeader($header, $value);
         }
     }
 
@@ -144,15 +153,6 @@ EOF
     }
 
     /**
-     * 添加特有的 request headers
-     */
-    protected function makeSpecificHeaders()
-    {
-        $this->httpful->addHeader('x-mqs-version', Mqs::VERSION);
-    }
-
-    /**
-     * @return \Httpful\associative|string
      * @throws \Httpful\Exception\ConnectionErrorException
      */
     protected function sendRequest()

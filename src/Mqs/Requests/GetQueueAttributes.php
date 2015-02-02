@@ -1,20 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: baocaixiong
- * Date: 15/2/2
- * Time: 上午11:31
- */
+// baocaixiong 下午4:29
 
 namespace Mqs\Requests;
 
 
-class DeleteQueue extends BaseRequest
+class GetQueueAttributes
 {
     /**
      * @var string
      */
-    protected $method = 'DELETE';
+    protected $method = 'GET';
 
     /**
      * @param string $queueName

@@ -3,6 +3,7 @@
 namespace Mqs;
 
 use Mqs\Requests\CreateQueue;
+use Mqs\Requests\ListQueue;
 
 class Mqs
 {
@@ -31,5 +32,14 @@ class Mqs
     public function createQueue($queueName)
     {
         return new CreateQueue($this->account, $queueName);
+    }
+
+    /**
+     * @param string $prefix
+     * @return ListQueue
+     */
+    public function listQueue($prefix = '')
+    {
+        return new ListQueue($this->account, $prefix);
     }
 }

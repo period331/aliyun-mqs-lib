@@ -1,6 +1,7 @@
 <?php
 
 namespace Mqs\Requests;
+use Httpful\Response;
 use LSS\Array2XML;
 use LSS\XML2Array;
 use Mqs\Account;
@@ -31,7 +32,7 @@ abstract class BaseRequest
     /**
      * @var string
      */
-    protected $requestResource;
+    protected $requestResource = '/';
 
     /**
      * @var array
@@ -40,9 +41,11 @@ abstract class BaseRequest
 
     /**
      * construct method
+     * @param Account $account
      */
-    public function __construct()
+    public function __construct(Account $account)
     {
+        $this->account = $account;
         $method = strtolower($this->method);
 
         $this->httpful = Request::$method($this->account->getSchemeHost().$this->requestResource);
@@ -88,21 +91,43 @@ abstract class BaseRequest
 
     public function send()
     {
-        $payload = $this->makePayload();
+        $payload = '';
+        if (in_array($this->httpful->method, ['POST', 'PUT'])) {
+            $payload = $this->makePayload();
+        }
+
         $this->httpful->addHeader('Content-Length', strlen($payload));
         $this->httpful->addHeader('Content-MD5', base64_encode(md5($payload)));
         $this->httpful->addHeader('Content-Type', 'text/xml;utf-8');
         $this->httpful->addHeader('Date', date('D, d M Y H:i:s', time()) . ' GMT');
         $this->httpful->addHeader('Host', $this->account->getHost());
-        $this->httpful->addHeader('x-mqs-version', Mqs::VERSION);
 
-        $this->httpful->addHeader('Authorization', $this->makeSignature());
+        $this->makeSpecificHeaders();
 
         $this->httpful->body($payload);
 
         $this->httpful->expectsXml();
 
-        return $this->httpful->send();
+        try {
+            return $this->sendRequest();
+        } catch (\Exception $e) {
+            return new Response(
+            sprintf(<<<EOF
+<?xml version="1.0"?>
+<Error xmlns="http://mqs.aliyuncs.com/doc/v1">
+  <Code>%s</Code>
+  <Message>%s</Message>
+  <RequestId>0</RequestId>
+  <HostId>%s</HostId>
+</Error>
+
+EOF
+            , $e->getCode(), $e->getMessage().'; FILE: '.$e->getFile().'; LINE: '.$e->getLine(), $this->account->getSchemeHost())
+            ,
+                "HTTP/1.1 400 OK\r\nServer: MOCK-SERVER\r\nContent-Type: text/xml;charset=utf-8\r\nx-mqs-request-id: 0",
+                $this->httpful
+            );
+        }
     }
 
     /**
@@ -121,11 +146,30 @@ abstract class BaseRequest
     }
 
     /**
+     * 添加特有的 request headers
+     */
+    protected function makeSpecificHeaders()
+    {
+        $this->httpful->addHeader('x-mqs-version', Mqs::VERSION);
+    }
+
+    /**
+     * @return \Httpful\associative|string
+     * @throws \Httpful\Exception\ConnectionErrorException
+     */
+    protected function sendRequest()
+    {
+        $this->httpful->addHeader('Authorization', $this->makeSignature());
+
+        return $this->httpful->send();
+    }
+
+    /**
      * 创建访问令牌
      *
      * @return string
      */
-    public function makeSignature()
+    protected function makeSignature()
     {
         $mqsHeaders = [];
         foreach ($this->httpful->headers as $key => $value) {
@@ -138,7 +182,7 @@ abstract class BaseRequest
         sort($orderKeys);
 
         $sortedMQSHeaders = '';
-        foreach( $orderKeys as $key){
+        foreach ($orderKeys as $key) {
             $sortedMQSHeaders .= join(":", [strtolower($key), $mqsHeaders[$key] . "\n" ]);
         }
 

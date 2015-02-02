@@ -19,11 +19,6 @@ class CreateQueue extends BaseRequest
     /**
      * @var string
      */
-    protected $requestResource;
-
-    /**
-     * @var string
-     */
     protected $queueName;
 
     /**
@@ -32,11 +27,10 @@ class CreateQueue extends BaseRequest
      */
     public function __construct(Account $account, $queueName)
     {
-        $this->account = $account;
         $this->queueName = $queueName;
 
         $this->requestResource = '/'.$this->queueName;
 
-        parent::__construct();
+        parent::__construct($account);
     }
 }

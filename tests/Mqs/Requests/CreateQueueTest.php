@@ -21,6 +21,12 @@ class CreateQueueTest extends \PHPUnit_Framework_TestCase
     {
         $this->mqs = new Mqs(TEST_MQS_URL, TEST_MQS_ACCESS_KEY, TEST_MQS_ACCESS_SECRET);
 
+        $list = $this->mqs->listQueue('test-queue1')->send();
+
+        if ($list->body->count() > 0) {
+
+        }
+
         parent::setUp();
     }
 
@@ -34,7 +40,6 @@ class CreateQueueTest extends \PHPUnit_Framework_TestCase
             'MessageRetentionPeriod' => 1296000
         ]);
         $res = $req->send();
-        var_dump($res);
     }
 
     public function setDown()

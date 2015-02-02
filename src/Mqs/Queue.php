@@ -11,18 +11,17 @@ class Queue
      */
     public $name;
 
-    /**
-     * @var Client
-     */
-    protected $client;
 
     /**
-     * @param Client $client
      * @param string $queueName
      */
-    public function __construct(Client $client, $queueName)
+    public function __construct($queueName)
     {
-        $this->client = $client;
         $this->name = $queueName;
+    }
+
+    public function create()
+    {
+
     }
 }

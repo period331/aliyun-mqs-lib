@@ -53,7 +53,7 @@ class Mqs
      */
     public function createQueue($queueName)
     {
-        return new CreateQueue($queueName);
+        return (new CreateQueue($queueName))->initAccount($this->account);
     }
 
     /**
@@ -62,7 +62,7 @@ class Mqs
      */
     public function listQueue($prefix = '')
     {
-        return new ListQueue($prefix);
+        return (new ListQueue($prefix))->initAccount($this->account);
     }
 
     /**
@@ -71,7 +71,7 @@ class Mqs
      */
     public function deleteQueue($queueName)
     {
-        return new DeleteQueue($queueName);
+        return (new DeleteQueue($queueName))->initAccount($this->account);
     }
 
     /**
@@ -80,7 +80,7 @@ class Mqs
      */
     public function sendMessage($queueName)
     {
-        return new SendMessage($queueName);
+        return (new SendMessage($queueName))->initAccount($this->account);
     }
 
     /**
@@ -90,7 +90,7 @@ class Mqs
      */
     public function receiveMessage($queueName, $waitSeconds = 10)
     {
-        return new ReceiveMessage($queueName, $waitSeconds);
+        return (new ReceiveMessage($queueName, $waitSeconds))->initAccount($this->account);
     }
 
     /**
@@ -99,6 +99,6 @@ class Mqs
      */
     public function deleteMessage($queueName)
     {
-        return new DeleteMessage($queueName);
+        return (new DeleteMessage($queueName))->initAccount($this->account);
     }
 }

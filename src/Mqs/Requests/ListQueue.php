@@ -8,8 +8,6 @@ namespace Mqs\Requests;
  */
 class ListQueue extends BaseRequest
 {
-    protected $payload = [];
-
     /**
      * @var string
      */

@@ -4,9 +4,9 @@
 namespace Mqs\Requests;
 
 
-class PeekMessage
+class PeekMessage extends BaseRequest
 {
-    protected $payload = [
+    protected $urlParams = [
         'peekonly' => true
     ];
 
@@ -22,7 +22,7 @@ class PeekMessage
      */
     public function setPeekonly($bool)
     {
-        $this->payload['peekonly'] = $bool;
+        $this->urlParams['peekonly'] = $bool;
 
         return $this;
     }

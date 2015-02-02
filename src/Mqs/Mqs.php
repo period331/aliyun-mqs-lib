@@ -34,7 +34,7 @@ class Mqs
     /**
      * @var Account
      */
-    protected $account;
+    public $account;
 
     /**
      * @param string $host

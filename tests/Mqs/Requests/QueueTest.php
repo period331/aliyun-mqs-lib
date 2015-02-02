@@ -28,25 +28,23 @@ class CreateQueueTest extends \PHPUnit_Framework_TestCase
 
     /**
      * test create queue
+     *
+     * @group testCreateQueue
      */
     public function testCreateQueue()
     {
-        $req = $this->mqs->createQueue($this->temp = 'test-queue-'.time());
+        $req = $this->mqs->createQueue($this->temp = 'test-queue');
+        $req->initAccount($this->mqs->account);
+
         $req->params([
             'MessageRetentionPeriod' => 1296000
         ]);
+
         $res = $req->send();
     }
 
     public function tearDown()
     {
-        $list = $this->mqs->listQueue($this->temp)->send();
-        if ($list->body->count() > 0) {
-
-            foreach (XML2Array::createArray($list->raw_body)['Queues'] as $queue) {
-                $queueName = trim(parse_url($queue['QueueURL'], PHP_URL_PATH), '/');
-                $this->mqs->deleteQueue($queueName)->send();
-            }
-        }
+        $list = $this->mqs->listQueue($this->temp)->initAccount($this->mqs->account)->send();
     }
 }

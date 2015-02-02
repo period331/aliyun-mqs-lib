@@ -23,11 +23,11 @@ class SendMessageTest extends \PHPUnit_Framework_TestCase
     public function testSendMessage()
     {
         $req = $this->mqs->sendMessage('mqs-lib-test');
-        $req->params([
-            'MessageBody' => 'nihao'
-        ]);
+        $req->initAccount($this->mqs->account);
 
-        $req->send();
+        $req->setMessageBody(['nihao' => 'nihao']);
+
+        var_dump($req->send());
     }
 
     /**
@@ -35,7 +35,7 @@ class SendMessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testReceiveMessage()
     {
-        $req = $this->mqs->receiveMessage('mqs-lib-test')->send();
+        $req = $this->mqs->receiveMessage('mqs-lib-test')->initAccount($this->mqs->account)->send();
         var_dump($req);
     }
 }

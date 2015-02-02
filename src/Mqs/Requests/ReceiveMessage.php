@@ -7,7 +7,7 @@ class ReceiveMessage extends BaseRequest
 {
     protected $method = 'GET';
 
-    protected $payload = [
+    protected $urlParams = [
         'waitseconds' => 10
     ];
 
@@ -23,7 +23,7 @@ class ReceiveMessage extends BaseRequest
      */
     public function setWaitseconds($seconds = 10)
     {
-        $this->payload['waitseconds'] = $seconds;
+        $this->urlParams['waitseconds'] = $seconds;
 
         return $this;
     }

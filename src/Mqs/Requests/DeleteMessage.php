@@ -10,7 +10,7 @@ class DeleteMessage extends BaseRequest
     /**
      * @var array
      */
-    protected $payload = [
+    protected $urlParams = [
         'ReceiptHandle' => ''
     ];
 
@@ -29,7 +29,7 @@ class DeleteMessage extends BaseRequest
      */
     public function setReceiptHandle($handler)
     {
-        $this->payload['ReceiptHandle'] = $handler;
+        $this->urlParams['ReceiptHandle'] = $handler;
 
         return $this;
     }

@@ -6,7 +6,7 @@ class SendMessage extends BaseRequest
     protected $method = 'POST';
 
     protected $payload = [
-        'MessageBody' => '',
+        'MessageBody' => [],
         'DelaySeconds' => 0,
         'Priority' => 8
     ];

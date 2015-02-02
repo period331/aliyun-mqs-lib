@@ -4,9 +4,9 @@
 namespace Mqs\Requests;
 
 
-class ChangeMessageVisibility
+class ChangeMessageVisibility extends BaseRequest
 {
-    protected $payload = [
+    protected $urlParams = [
         'ReceiptHandle' => -1,
         'VisibilityTimeout' => -1
     ];
@@ -26,7 +26,7 @@ class ChangeMessageVisibility
      */
     public function setReceiptHandle($handler)
     {
-        $this->payload['ReceiptHandle'] = $handler;
+        $this->urlParams['ReceiptHandle'] = $handler;
 
         return $this;
     }
@@ -37,7 +37,7 @@ class ChangeMessageVisibility
      */
     public function setVisibilityTimeout($timeout)
     {
-        $this->payload['VisibilityTimeout'] = $timeout;
+        $this->urlParams['VisibilityTimeout'] = $timeout;
 
         return $this;
     }

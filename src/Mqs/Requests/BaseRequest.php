@@ -6,6 +6,7 @@ use LSS\Array2XML;
 use Mqs\Account;
 use Httpful\Request;
 use Mqs\Mqs;
+use Mqs\Responses\BaseResponse;
 
 /**
  * Class BaseRequest
@@ -46,16 +47,26 @@ abstract class BaseRequest
     ];
 
     /**
+     * query string params
+     *
+     * @var array
+     */
+    protected $urlParams = [];
+
+    /**
      * @var string
      */
     protected $queueName;
 
     /**
      * @param Account $account
+     * @return $this
      */
     public function initAccount(Account $account)
     {
         $this->account = $account;
+
+        return $this;
     }
 
     /**
@@ -75,56 +86,15 @@ abstract class BaseRequest
     }
 
     /**
-     * 发送http请求
-     *
-     * @return Response|string
+     * @return BaseResponse
      */
     public function send()
     {
-        !$this->httpful and $this->httpful = Request::init($this->method);
+        $interRes = $this->sendRequest();
 
-        $payload = '';
-        $uri = $this->account->getSchemeHost().$this->requestResource;
+        $resClass = str_replace('Requests', 'Responses', get_called_class());
 
-        if (in_array($this->httpful->method, ['POST', 'PUT'])) {
-            $payload = $this->makePayload();
-        } else {
-            $uri .= '?'.http_build_query($this->payload);
-        }
-
-        $this->httpful->uri($uri);
-
-        $this->httpful->addHeader('Content-Length', strlen($payload));
-        $this->httpful->addHeader('Content-MD5', base64_encode(md5($payload)));
-        $this->httpful->addHeader('Content-Type', 'text/xml;utf-8');
-        $this->httpful->addHeader('Date', date('D, d M Y H:i:s', time()) . ' GMT');
-        $this->httpful->addHeader('Host', $this->account->getHost());
-
-        $this->makeSpecificHeaders();
-
-        $this->httpful->body($payload);
-
-        $this->httpful->expectsXml();
-
-        try {
-            return $this->sendRequest();
-        } catch (\Exception $e) {
-            return new Response(
-            sprintf(<<<EOF
-<?xml version="1.0"?>
-<Error xmlns="http://mqs.aliyuncs.com/doc/v1">
-  <Code>%s</Code>
-  <Message>%s</Message>
-  <RequestId>0</RequestId>
-  <HostId>%s</HostId>
-</Error>
-
-EOF
-            , $e->getCode(), $e->getMessage().'; FILE: '.$e->getFile().'; LINE: '.$e->getLine(), $this->account->getSchemeHost())
-            ,"HTTP/1.1 400 OK\r\nServer: MOCK-SERVER\r\nContent-Type: text/xml;charset=utf-8\r\nx-mqs-request-id: 0",
-                $this->httpful
-            );
-        }
+        return new $resClass($interRes);
     }
 
     /**
@@ -153,13 +123,57 @@ EOF
     }
 
     /**
+     * 执行http发送请求
+     *
      * @throws \Httpful\Exception\ConnectionErrorException
      */
     protected function sendRequest()
     {
+        !$this->httpful and $this->httpful = Request::init($this->method);
+
+        $payload = '';
+        if (in_array($this->httpful->method, ['POST', 'PUT'])) {
+            $payload = $this->makePayload();
+        }
+
+        $uri = $this->account->getSchemeHost().$this->requestResource;
+        $this->urlParams and $uri .= '?'.http_build_query($this->urlParams);
+
+        $this->httpful->uri($uri);
+
+        $this->httpful->addHeader('Content-Length', strlen($payload));
+        $this->httpful->addHeader('Content-MD5', base64_encode(md5($payload)));
+        $this->httpful->addHeader('Content-Type', 'text/xml;utf-8');
+        $this->httpful->addHeader('Date', date('D, d M Y H:i:s', time()) . ' GMT');
+        $this->httpful->addHeader('Host', $this->account->getHost());
+
+        $this->makeSpecificHeaders();
+
+        $this->httpful->body($payload);
+
+        $this->httpful->expectsXml();
+
         $this->httpful->addHeader('Authorization', $this->makeSignature());
 
-        return $this->httpful->send();
+        try {
+            return $this->httpful->send();
+        } catch (\Exception $e) {
+            return new Response(
+            sprintf(<<<EOF
+<?xml version="1.0"?>
+<Error xmlns="http://mqs.aliyuncs.com/doc/v1">
+  <Code>%s</Code>
+  <Message>%s</Message>
+  <RequestId>0</RequestId>
+  <HostId>%s</HostId>
+</Error>
+
+EOF
+            , $e->getCode(), $e->getMessage().'; FILE: '.$e->getFile().'; LINE: '.$e->getLine(), $this->account->getSchemeHost())
+            ,"HTTP/1.1 400 OK\r\nServer: MOCK-SERVER\r\nContent-Type: text/xml;charset=utf-8\r\nx-mqs-request-id: 0",
+                $this->httpful
+            );
+        }
     }
 
     /**

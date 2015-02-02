@@ -3,6 +3,7 @@
 namespace Mqs;
 
 use Mqs\Requests\CreateQueue;
+use Mqs\Requests\DeleteQueue;
 use Mqs\Requests\ListQueue;
 
 class Mqs
@@ -41,5 +42,14 @@ class Mqs
     public function listQueue($prefix = '')
     {
         return new ListQueue($this->account, $prefix);
+    }
+
+    /**
+     * @param string $queueName
+     * @return DeleteQueue
+     */
+    public function deleteQueue($queueName)
+    {
+        return new DeleteQueue($this->account, $queueName);
     }
 }

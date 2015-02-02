@@ -1,6 +1,7 @@
 <?php
 
 namespace Mqs\Requests;
+use LSS\XML2Array;
 use Mqs\Mqs;
 
 /**
@@ -14,19 +15,14 @@ class CreateQueueTest extends \PHPUnit_Framework_TestCase
      */
     protected $mqs;
 
+    protected $temp;
+
     /**
      *  setup test
      */
     public function setUp()
     {
         $this->mqs = new Mqs(TEST_MQS_URL, TEST_MQS_ACCESS_KEY, TEST_MQS_ACCESS_SECRET);
-
-        $list = $this->mqs->listQueue('test-queue1')->send();
-
-        if ($list->body->count() > 0) {
-
-        }
-
         parent::setUp();
     }
 
@@ -35,15 +31,22 @@ class CreateQueueTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateQueue()
     {
-        $req = $this->mqs->createQueue('test-queue1');
+        $req = $this->mqs->createQueue($this->temp = 'test-queue-'.time());
         $req->params([
             'MessageRetentionPeriod' => 1296000
         ]);
         $res = $req->send();
     }
 
-    public function setDown()
+    public function tearDown()
     {
+        $list = $this->mqs->listQueue($this->temp)->send();
+        if ($list->body->count() > 0) {
 
+            foreach (XML2Array::createArray($list->raw_body)['Queues'] as $queue) {
+                $queueName = trim(parse_url($queue['QueueURL'], PHP_URL_PATH), '/');
+                $this->mqs->deleteQueue($queueName)->send();
+            }
+        }
     }
 }

@@ -120,12 +120,10 @@ abstract class BaseRequest
   <RequestId>0</RequestId>
   <HostId>%s</HostId>
 </Error>
-
 EOF
             , $e->getCode(), $e->getMessage().'; FILE: '.$e->getFile().'; LINE: '.$e->getLine(), $this->account->getSchemeHost())
-            ,
-                "HTTP/1.1 400 OK\r\nServer: MOCK-SERVER\r\nContent-Type: text/xml;charset=utf-8\r\nx-mqs-request-id: 0",
-                $this->httpful
+            , "HTTP/1.1 400 OK\r\nServer: MOCK-SERVER\r\nContent-Type: text/xml;charset=utf-8\r\nx-mqs-request-id: 0",
+            $this->httpful
             );
         }
     }

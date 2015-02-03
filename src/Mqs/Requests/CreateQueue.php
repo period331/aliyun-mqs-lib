@@ -74,4 +74,44 @@ class CreateQueue extends BaseRequest
 
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getDelaySeconds()
+    {
+        return $this->payload['DelaySeconds'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaximumMessageSize()
+    {
+        return $this->payload['MaximumMessageSize'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getMessageRetentionPeriod()
+    {
+        return $this->payload['MessageRetentionPeriod'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getVisibilityTimeout()
+    {
+        return $this->payload['VisibilityTimeout'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getPollingWaitSeconds()
+    {
+        return $this->payload['PollingWaitSeconds'];
+    }
 }

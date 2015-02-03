@@ -35,17 +35,24 @@ class BaseResponse
     public $interRes;
 
     /**
+     * @var \Httpful\Request
+     */
+    public $interReq;
+
+    /**
      * @var BaseRequest
      */
     public $request;
 
     /**
      * @param Response $res
+     * @param BaseRequest $request
      */
-    public function __construct(Response $res)
+    public function __construct(Response $res, BaseRequest $request)
     {
         $this->interRes = $res;
-        $this->request = $res->request;
+        $this->interReq = $res->request;
+        $this->request = $request;
 
         $this->stats = $res->code;
         $this->headers = $res->headers;

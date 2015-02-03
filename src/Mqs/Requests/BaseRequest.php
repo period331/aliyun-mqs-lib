@@ -43,7 +43,7 @@ abstract class BaseRequest
      * @var array
      */
     protected $specificHeaders = [
-        'x-mqs-version' => Mqs::VERSION
+        'x-mqs-version' => '2014-07-08'
     ];
 
     /**
@@ -90,6 +90,8 @@ abstract class BaseRequest
      */
     public function send()
     {
+        !$this->account and $this->account = Account::instance();
+
         $interRes = $this->sendRequest();
 
         $resClass = str_replace('Requests', 'Responses', get_called_class());
@@ -137,7 +139,8 @@ abstract class BaseRequest
         }
 
         $uri = $this->account->getSchemeHost().$this->requestResource;
-        $this->urlParams and $uri .= '?'.http_build_query($this->urlParams);
+        $this->urlParams and $uri .= '?'.http_build_query($this->urlParams)
+        and $this->requestResource .= '?'.http_build_query($this->urlParams);
 
         $this->httpful->uri($uri);
 
@@ -150,8 +153,6 @@ abstract class BaseRequest
         $this->makeSpecificHeaders();
 
         $this->httpful->body($payload);
-
-        $this->httpful->expectsXml();
 
         $this->httpful->addHeader('Authorization', $this->makeSignature());
 

@@ -1,19 +1,13 @@
 <?php
 
 namespace Mqs\Requests;
-use Mqs\Mqs;
 
 
 class SendMessageTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var Mqs
-     */
-    protected $mqs;
 
     public function setUp()
     {
-        $this->mqs = new Mqs(TEST_MQS_URL, TEST_MQS_ACCESS_KEY, TEST_MQS_ACCESS_SECRET);
         parent::setUp();
     }
 
@@ -22,8 +16,7 @@ class SendMessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testSendMessage()
     {
-        $req = $this->mqs->sendMessage('mqs-lib-test');
-        $req->initAccount($this->mqs->account);
+        $req = new SendMessage('mqs-lib-test');
 
         $req->setMessageBody(['nihao' => 'nihao']);
 
@@ -35,7 +28,9 @@ class SendMessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testReceiveMessage()
     {
-        $req = $this->mqs->receiveMessage('mqs-lib-test')->initAccount($this->mqs->account)->send();
-        var_dump($req);
+        $req = new ReceiveMessage('mqs-lib-test');
+        $req->setWaitseconds(10);
+        $res = $req->send();
+        var_dump($res);
     }
 }

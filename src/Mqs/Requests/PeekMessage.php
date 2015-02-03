@@ -22,7 +22,7 @@ class PeekMessage extends BaseRequest
      */
     public function setPeekonly($bool)
     {
-        $this->urlParams['peekonly'] = $bool;
+        $this->urlParams['peekonly'] = $bool ? 'true' : 'false';
 
         return $this;
     }

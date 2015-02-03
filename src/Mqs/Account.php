@@ -15,11 +15,41 @@ class Account
     protected $accessSecret;
 
     /**
+     * @var Account
+     */
+    private static $instance;
+
+    /**
+     * @param string $host
+     * @param string $key
+     * @param string $secret
+     *
+     * @return Account
+     */
+    public static function init($host, $key, $secret)
+    {
+        return self::$instance = new self($host, $key, $secret);
+    }
+
+    /**
+     * @return Account
+     * @throws \Exception
+     */
+    public static function instance()
+    {
+        if (is_null(self::$instance)) {
+            throw new \Exception('the Account is not initialize.');
+        }
+
+        return self::$instance;
+    }
+
+    /**
      * @param string $host
      * @param string $key
      * @param string $secret
      */
-    public function __construct($host, $key, $secret)
+    private function __construct($host, $key, $secret)
     {
         $this->host = $host;
         $this->accessKey = $key;

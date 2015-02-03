@@ -3,8 +3,15 @@
 
 namespace Mqs\Responses;
 
+use Mqs\Message;
+
 
 class ReceiveMessage extends BaseResponse
 {
-
+    /**
+     * @return Message
+     */
+    public function getMessage()
+    {
+    }
 }

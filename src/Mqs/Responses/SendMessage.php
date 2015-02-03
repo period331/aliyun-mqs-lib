@@ -7,4 +7,11 @@ namespace Mqs\Responses;
 class SendMessage extends BaseResponse
 {
 
+    /**
+     * @return int
+     */
+    public function getMessageId()
+    {
+        return $this->arrayBody['Message']['MessageId'];
+    }
 }

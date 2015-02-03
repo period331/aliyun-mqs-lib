@@ -10,11 +10,6 @@ use Mqs\Mqs;
  */
 class CreateQueueTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var Mqs
-     */
-    protected $mqs;
-
     protected $temp;
 
     /**
@@ -22,7 +17,6 @@ class CreateQueueTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->mqs = new Mqs(TEST_MQS_URL, TEST_MQS_ACCESS_KEY, TEST_MQS_ACCESS_SECRET);
         parent::setUp();
     }
 
@@ -33,18 +27,15 @@ class CreateQueueTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateQueue()
     {
-        $req = $this->mqs->createQueue($this->temp = 'test-queue');
-        $req->initAccount($this->mqs->account);
-
-        $req->params([
-            'MessageRetentionPeriod' => 1296000
-        ]);
+        $req = new CreateQueue($this->temp='test-queue');
+        $req->setMessageRetentionPeriod(1296000);
 
         $res = $req->send();
     }
 
     public function tearDown()
     {
-        $list = $this->mqs->listQueue($this->temp)->initAccount($this->mqs->account)->send();
+        $req = new DeleteQueue($this->temp);
+        $res = $req->send();
     }
 }

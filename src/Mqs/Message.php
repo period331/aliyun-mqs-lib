@@ -6,12 +6,86 @@ namespace Mqs;
 
 class Message
 {
+    /**
+     * @var string
+     */
+    protected $messageBody;
+
+    /**
+     * 延迟时间
+     *
+     * @var int
+     */
+    protected $delaySeconds = -1;
+
+    /**
+     * 优先级
+     *
+     * @var int
+     */
+    protected $priority = -1;
+
+    /**
+     * 调用次数
+     *
+     * @var int
+     */
+    protected $dequeueCount = -1;
+
+    /**
+     * 下次执行时间
+     *
+     * @var int
+     */
+    protected $nextVisibleTime = -1;
+
+    /**
+     * 首次执行时间
+     *
+     * @var int
+     */
+    protected $firstDequeueTime = -1;
+
+    /**
+     * 入队时间
+     *
+     * @var int
+     */
+    protected $enqueueTime = -1;
+
+    /**
+     * @var string
+     */
+    protected $receiptHandle = '';
+
+    /**
+     * @var string
+     */
+    protected $messageBodyMD5 = '';
+
+    /**
+     * @var int
+     */
+    protected $messageId = -1;
+
+    /**
+     * @param array $messageBodyArray
+     */
+    public function __construct(array $messageBodyArray)
+    {
+        foreach ($messageBodyArray as $key => $value) {
+            if (property_exists($this, $pro = lcfirst($key))) {
+                $this->$pro = $value;
+            }
+        }
+    }
 
     /**
      * @return string
      */
     public function getRawBody()
     {
+        return $this->messageBody;
     }
 
     /**
@@ -19,6 +93,7 @@ class Message
      */
     public function getReceiptHandle()
     {
+        return $this->receiptHandle;
     }
 
     /**
@@ -26,5 +101,6 @@ class Message
      */
     public function getDequeueCount()
     {
+        return $this->dequeueCount;
     }
 }

@@ -43,9 +43,4 @@ class Queue
         $req = new CreateQueue($this->name);
         return $req->send();
     }
-
-    public function peekMessage()
-    {
-
-    }
 }

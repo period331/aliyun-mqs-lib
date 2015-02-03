@@ -96,7 +96,7 @@ abstract class BaseRequest
 
         $resClass = str_replace('Requests', 'Responses', get_called_class());
 
-        return new $resClass($interRes);
+        return new $resClass($interRes, $this);
     }
 
     /**

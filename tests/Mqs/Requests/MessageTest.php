@@ -30,7 +30,11 @@ class SendMessageTest extends \PHPUnit_Framework_TestCase
     {
         $req = new ReceiveMessage('mqs-lib-test');
         $req->setWaitseconds(10);
+        /**
+         * @var $res \Mqs\Responses\ReceiveMessage
+         */
         $res = $req->send();
-        var_dump($res);
+
+        var_dump($res->getMessage());
     }
 }

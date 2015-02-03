@@ -116,7 +116,7 @@ class MqsQueue extends Queue implements QueueInterface
          */
         $res = $req->send();
 
-        if ($job = $res->getMessage()) {
+        if (!$res->isNotFound() and $job = $res->getMessage()) {
             return new MqsJob($this->container, $job, $queue);
         }
     }

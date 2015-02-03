@@ -13,5 +13,16 @@ class ReceiveMessage extends BaseResponse
      */
     public function getMessage()
     {
+        return new Message($this->arrayBody['Message']);
+    }
+
+    /**
+     * 是否未找到job
+     *
+     * @return bool
+     */
+    public function isNotFound()
+    {
+        return $this->stats == 404;
     }
 }

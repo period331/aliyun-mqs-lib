@@ -30,7 +30,7 @@ class BaseResponse
     public $arrayBody = [];
 
     /**
-     * @var Response
+     * @var \Httpful\Response
      */
     public $interRes;
 

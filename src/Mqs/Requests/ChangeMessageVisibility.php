@@ -41,4 +41,20 @@ class ChangeMessageVisibility extends BaseRequest
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getReceiptHandler()
+    {
+        return $this->payload['ReceiptHandler'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getVisibilityTimeout()
+    {
+        return $this->payload['VisibilityTimeout'];
+    }
 }

@@ -4,7 +4,7 @@
 namespace Mqs;
 
 
-use Mqs\Exceptions\QueueExists;
+use Mqs\Exceptions\QueueException;
 use Mqs\Requests\CreateQueue;
 
 class Queue
@@ -37,7 +37,7 @@ class Queue
     public function create()
     {
         if ($this->exists) {
-            throw new QueueExists;
+            throw new QueueException('QueueExisted', sprintf('Create Queue Error: the queue "%s" is existed.', $this->name));
         }
 
         $req = new CreateQueue($this->name);

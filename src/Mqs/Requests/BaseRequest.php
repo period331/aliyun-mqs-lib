@@ -86,15 +86,27 @@ abstract class BaseRequest
     }
 
     /**
+     * @return string
+     */
+    public function getQueueName()
+    {
+        return $this->queueName;
+    }
+
+    /**
      * @return BaseResponse
      */
     public function send()
     {
         !$this->account and $this->account = Account::instance();
+        $calledClass = get_called_class();
+
+        $validator = 'Mqs\\Validators\\'.class_basename($calledClass).'Validator';
+        $validator::validate($this);
 
         $interRes = $this->sendRequest();
 
-        $resClass = str_replace('Requests', 'Responses', get_called_class());
+        $resClass = str_replace('Requests', 'Responses', $calledClass);
 
         return new $resClass($interRes, $this);
     }

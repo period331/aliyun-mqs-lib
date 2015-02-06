@@ -66,4 +66,22 @@ class ListQueue extends BaseRequest
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
+
+    public function getMarker()
+    {
+        return isset($this->specificHeaders['x-mqs-marker']) ? $this->specificHeaders['x-mqs-marker'] : '';
+    }
+
+    public function getRetnumber()
+    {
+        return isset($this->specificHeaders['x-mqs-ret-number']) ? $this->specificHeaders['x-mqs-ret-number'] : -1;
+    }
 }

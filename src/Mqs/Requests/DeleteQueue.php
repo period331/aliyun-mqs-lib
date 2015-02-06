@@ -24,4 +24,5 @@ class DeleteQueue extends BaseRequest
         $this->queueName = $queueName;
         $this->requestResource = '/'.$this->queueName;
     }
+
 }

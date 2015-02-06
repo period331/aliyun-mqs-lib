@@ -54,4 +54,28 @@ class SendMessage extends BaseRequest
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getMessageBody()
+    {
+        return $this->payload['MessageBody'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getDelaySeconds()
+    {
+        return $this->payload['DelaySeconds'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority()
+    {
+        return $this->payload['Priority'];
+    }
 }

@@ -4,7 +4,7 @@
 namespace Mqs\Exceptions;
 
 
-class QueueExists extends \Exception
+class QueueException extends MqsException
 {
 
 }

@@ -4,7 +4,7 @@
 namespace Mqs\Requests;
 
 
-class SetQueueAttributes
+class SetQueueAttributes extends BaseRequest
 {
     protected $payload = [
         'DelaySeconds' => 0,

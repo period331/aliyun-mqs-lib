@@ -4,7 +4,7 @@
 namespace Mqs\Requests;
 
 
-class GetQueueAttributes
+class GetQueueAttributes extends BaseRequest
 {
     /**
      * @var string

@@ -1,7 +1,7 @@
 <?php
 // baocaixiong 下午3:10
 
-namespace Mqs;
+namespace Mqs\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Queue\QueueManager;

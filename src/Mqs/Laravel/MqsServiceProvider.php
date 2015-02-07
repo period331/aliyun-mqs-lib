@@ -12,6 +12,16 @@ use Mqs\Laravel\MqsQueue;
 class MqsServiceProvider extends ServiceProvider
 {
     /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->package('baocaixiong/mqs');
+    }
+
+    /**
      * Register the service provider.
      *
      * @return void
@@ -35,7 +45,7 @@ class MqsServiceProvider extends ServiceProvider
                 $config->get('queue.connections.mqs.secret')
             );
 
-            $queue = $config->get('queue.connections.mqs.name', 'default');
+            $queue = $config->get('queue.connections.mqs.queue', 'default');
             $keepAlive = $config->get('queue.connections.mqs.keepalive', 10);
 
             return new MqsQueue($queue, $keepAlive);

@@ -8,13 +8,7 @@ use Mqs\Message;
 
 class ReceiveMessage extends BaseResponse
 {
-    /**
-     * @return Message
-     */
-    public function getMessage()
-    {
-        return new Message($this->arrayBody['Message']);
-    }
+    use Message;
 
     /**
      * 是否未找到job

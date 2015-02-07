@@ -7,7 +7,7 @@ namespace Mqs\Requests;
 class PeekMessage extends BaseRequest
 {
     protected $urlParams = [
-        'peekonly' => true
+        'peekonly' => 'true'
     ];
 
     public function __construct($queueName)

@@ -17,7 +17,7 @@ class SetQueueAttributes extends BaseRequest
     protected $method = 'PUT';
 
     protected $urlParams = [
-        'metaoverride' => true
+        'metaoverride' => 'true'
     ];
 
     /**
@@ -77,7 +77,7 @@ class SetQueueAttributes extends BaseRequest
      */
     public function setMetaOverride($bool)
     {
-        $this->urlParams['metaoverride'] = $bool;
+        $this->urlParams['metaoverride'] = $bool ? 'true' : 'false';
 
         return $this;
     }

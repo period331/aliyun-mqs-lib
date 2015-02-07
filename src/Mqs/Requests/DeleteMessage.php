@@ -39,6 +39,6 @@ class DeleteMessage extends BaseRequest
      */
     public function getReceiptHandler()
     {
-        return $this->payload['ReceiptHandler'];
+        return $this->urlParams['ReceiptHandle'];
     }
 }

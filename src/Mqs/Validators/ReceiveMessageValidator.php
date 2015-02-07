@@ -17,5 +17,6 @@ class ReceiveMessageValidator extends MessageValidator
         parent::validate($req);
 
         self::queueNameValidate($req->getQueueName());
+        self::waitsecondsValidate($req->getWaitseconds());
     }
 }

@@ -5,6 +5,7 @@ use Httpful\Response;
 use LSS\Array2XML;
 use Mqs\Account;
 use Httpful\Request;
+use Mqs\Exceptions\RequestException;
 use Mqs\Mqs;
 use Mqs\Responses\BaseResponse;
 
@@ -106,9 +107,28 @@ abstract class BaseRequest
 
         $interRes = $this->sendRequest();
 
+        $this->catchError($interRes);
+
         $resClass = str_replace('Requests', 'Responses', $calledClass);
 
         return new $resClass($interRes, $this);
+    }
+
+    /**
+     * 处理请求异常
+     *
+     * @param Response $response
+     * @throws RequestException
+     */
+    protected function catchError(Response $response)
+    {
+        if ($xml = simplexml_load_string($response->body)) {
+            if ($xml->getName() == 'Error') {
+                throw new RequestException('RequestError', $xml->Message->__toString().
+                    '; RequestPayload:'.json_encode($this->payload).'; UrlParams:'.json_encode($this->urlParams)
+                );
+            }
+        }
     }
 
     /**

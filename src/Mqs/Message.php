@@ -4,7 +4,7 @@
 namespace Mqs;
 
 
-class Message
+trait Message
 {
     /**
      * @var string
@@ -67,18 +67,6 @@ class Message
      * @var int
      */
     protected $messageId = -1;
-
-    /**
-     * @param array $messageBodyArray
-     */
-    public function __construct(array $messageBodyArray)
-    {
-        foreach ($messageBodyArray as $key => $value) {
-            if (property_exists($this, $pro = lcfirst($key))) {
-                $this->$pro = $value;
-            }
-        }
-    }
 
     /**
      * @return string

@@ -7,7 +7,7 @@ namespace Mqs\Requests;
 class ChangeMessageVisibility extends BaseRequest
 {
     protected $urlParams = [
-        'ReceiptHandle' => -1,
+        'ReceiptHandle' => '',
         'VisibilityTimeout' => -1
     ];
 

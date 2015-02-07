@@ -27,4 +27,12 @@ class ReceiveMessage extends BaseRequest
 
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getWaitseconds()
+    {
+        return $this->urlParams['waitseconds'];
+    }
 }

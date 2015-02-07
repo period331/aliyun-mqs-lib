@@ -20,11 +20,6 @@ class BaseResponse
     public $headers = [];
 
     /**
-     * @var string
-     */
-    public $errorMessage = '';
-
-    /**
      * @var array|\DOMDocument
      */
     public $arrayBody = [];
@@ -59,11 +54,10 @@ class BaseResponse
 
         $this->arrayBody = $this->parseResBody();
 
-        if (isset($this->arrayBody['Error'])) {
-            $err = $this->arrayBody['Error'];
-            $this->errorMessage = sprintf('Code:%s, Message: %s, RequestId: %s, HostId: %s',
-                $err['Code'], $err['Message'], $err['RequestId'], $err['HostId']
-            );
+        foreach (array_values($this->arrayBody)[0] as $key => $value) {
+            if (property_exists($this, $pro = camel_case($key))) {
+                $this->$pro = $value;
+            }
         }
     }
 
@@ -73,7 +67,7 @@ class BaseResponse
      */
     protected function parseResBody()
     {
-        return XML2Array::createArray($this->interRes->raw_body);
+        return XML2Array::createArray($this->interRes->body);
     }
 
 }

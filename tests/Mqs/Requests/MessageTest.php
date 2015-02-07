@@ -35,6 +35,9 @@ class SendMessageTest extends \PHPUnit_Framework_TestCase
          */
         $res = $req->send();
 
-        var_dump($res->getMessage());
+        $delReq = new DeleteMessage('mqs-lib-test');
+        $delReq->setReceiptHandle($res->getReceiptHandle());
+
+        var_dump($delReq->send());
     }
 }

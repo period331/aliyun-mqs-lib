@@ -1,5 +1,5 @@
 {
-    "name": "baocaixiong/aliyun-mqs",
+    "name": "baocaixiong/aliyun-mqs-lib",
     "type": "library",
     "license": "MIT",
     "require": {

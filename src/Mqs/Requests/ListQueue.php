@@ -27,7 +27,7 @@ class ListQueue extends BaseRequest
      * @param string $prefix
      * @return $this
      */
-    public function prefix($prefix)
+    public function setPrefix($prefix)
     {
         $this->specificHeaders['x-mqs-prefix'] = $prefix;
 
@@ -38,7 +38,7 @@ class ListQueue extends BaseRequest
      * @param int $number
      * @return $this
      */
-    public function retNumber($number)
+    public function setRetNumber($number)
     {
         $this->specificHeaders['x-mqs-ret-number'] = $number;
 
@@ -49,7 +49,7 @@ class ListQueue extends BaseRequest
      * @param string $marker
      * @return $this
      */
-    public function marker($marker)
+    public function setMarker($marker)
     {
         $this->specificHeaders['x-mqs-ret-number'] = $marker;
 
@@ -60,7 +60,7 @@ class ListQueue extends BaseRequest
      * @param bool $bool
      * @return $this
      */
-    public function withMeta($bool)
+    public function setWithMeta($bool)
     {
         $this->specificHeaders['x-mqs-with-meta'] = $bool ? 'true' : 'false';
 

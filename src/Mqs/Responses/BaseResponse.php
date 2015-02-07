@@ -39,6 +39,8 @@ class BaseResponse
      */
     public $request;
 
+    protected $isSuccess = false;
+
     /**
      * @param Response $res
      * @param BaseRequest $request
@@ -52,10 +54,17 @@ class BaseResponse
         $this->stats = $res->code;
         $this->headers = $res->headers;
 
-        $this->arrayBody = $this->parseResBody();
+        if (in_array($this->stats, $this->request->getExpectedStatus())) {
+            $this->isSuccess = true;
+        }
 
-        foreach (array_values($this->arrayBody)[0] as $key => $value) {
-            if (property_exists($this, $pro = camel_case($key))) {
+        $this->parseResBody();
+
+        foreach ($this->arrayBody as $key => $value) {
+            $setter = 'set'.$key;
+            if (method_exists($this, $setter)) {
+                $this->$setter($value);
+            } elseif (property_exists($this, $pro = camel_case($key))) {
                 $this->$pro = $value;
             }
         }
@@ -67,7 +76,20 @@ class BaseResponse
      */
     protected function parseResBody()
     {
-        return XML2Array::createArray($this->interRes->body);
+        $array = ['temp' => []];
+        if ($this->interRes->body) {
+            $array = XML2Array::createArray($this->interRes->body);
+        }
+
+        $this->arrayBody = array_values($array)[0];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuccess()
+    {
+        return $this->isSuccess;
     }
 
 }

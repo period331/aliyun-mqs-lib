@@ -6,11 +6,6 @@ namespace Mqs\Responses;
 class CreateQueue extends BaseResponse
 {
     /**
-     * @var \Mqs\Requests\CreateQueue
-     */
-    protected $request;
-
-    /**
      * @return int
      */
     public function getDelaySeconds()

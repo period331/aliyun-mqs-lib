@@ -60,6 +60,11 @@ abstract class BaseRequest
     protected $queueName;
 
     /**
+     * @var int
+     */
+    protected $expectedStatus = 200;
+
+    /**
      * @param Account $account
      * @return $this
      */
@@ -84,6 +89,14 @@ abstract class BaseRequest
                 $this->payload[$key] = $attribute;
             }
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getExpectedStatus()
+    {
+        return (array) $this->expectedStatus;
     }
 
     /**

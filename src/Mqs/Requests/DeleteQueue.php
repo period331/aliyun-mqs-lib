@@ -16,6 +16,8 @@ class DeleteQueue extends BaseRequest
      */
     protected $method = 'DELETE';
 
+    protected $expectedStatus = 204;
+
     /**
      * @param string $queueName
      */

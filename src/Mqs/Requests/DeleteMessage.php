@@ -7,6 +7,8 @@ class DeleteMessage extends BaseRequest
 {
     protected $method = 'DELETE';
 
+    protected $expectedStatus = 204;
+
     /**
      * @var array
      */

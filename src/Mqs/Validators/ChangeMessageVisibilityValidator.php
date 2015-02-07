@@ -7,7 +7,7 @@ namespace Mqs\Validators;
 use Mqs\Exceptions\ParameterException;
 use Mqs\Requests\ChangeMessageVisibility;
 
-class ChangeMsgVisValidator extends MessageValidator
+class ChangeMessageVisibilityValidator extends MessageValidator
 {
     /**
      * @param ChangeMessageVisibility $req

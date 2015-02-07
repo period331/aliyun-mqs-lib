@@ -10,6 +10,8 @@ class PeekMessage extends BaseRequest
         'peekonly' => 'true'
     ];
 
+    protected $method = 'GET';
+
     public function __construct($queueName)
     {
         $this->queueName = $queueName;

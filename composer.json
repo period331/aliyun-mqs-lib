@@ -3,7 +3,6 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "monolog/monolog": "~1.12",
         "nategood/httpful": "0.2.*",
         "openlss/lib-array2xml": "dev-master",
         "illuminate/queue": "4.2.*"

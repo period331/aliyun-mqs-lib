@@ -11,6 +11,8 @@ class SendMessage extends BaseRequest
         'Priority' => 8
     ];
 
+    protected $expectedStatus = 201;
+
     /**
      * @param string $queueName
      */

@@ -16,6 +16,6 @@ class ListQueueValidator extends QueueValidator
     {
         parent::validate($req);
 
-        self::queueNameValidate($req->getQueueName());
+        self::listConditionValidate($req);
     }
 }

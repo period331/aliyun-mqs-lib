@@ -15,6 +15,13 @@ class CreateQueue extends BaseRequest
     protected $method = 'PUT';
 
     /**
+     * 204
+     *
+     * @var array
+     */
+    protected $expectedStatus = [201, 204];
+
+    /**
      * @param string $queueName
      */
     public function __construct($queueName)

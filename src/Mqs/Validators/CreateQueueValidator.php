@@ -35,11 +35,11 @@ class CreateQueueValidator extends QueueValidator
             throw new ParameterException('QueueAttrInvalid', sprintf('Bad value: "%d", message retention period should larger than 0.', $t));
         }
 
-        if ( ($t = $req->getDelaySeconds()) != -1 && $t <= 0 ) {
+        if ( ($t = $req->getDelaySeconds()) != -1 && $t < 0 ) {
             throw new ParameterException('QueueAttrInvalid', sprintf('Bad value: "%d", delay seconds should larger than 0.', $t));
         }
 
-        if ( ($t = $req->getPollingWaitSeconds()) != -1 && $t <= 0 ) {
+        if ( ($t = $req->getPollingWaitSeconds()) != -1 && $t < 0 ) {
             throw new ParameterException('QueueAttrInvalid', sprintf('Bad value: "%d", polling wait seconds should larger than 0.', $t));
         }
     }

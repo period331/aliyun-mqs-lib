@@ -11,6 +11,8 @@ class ChangeMessageVisibility extends BaseRequest
         'VisibilityTimeout' => -1
     ];
 
+    protected $expectedStatus = 200;
+
     /**
      * @param string $queueName
      */
@@ -47,7 +49,7 @@ class ChangeMessageVisibility extends BaseRequest
      */
     public function getReceiptHandler()
     {
-        return $this->payload['ReceiptHandler'];
+        return $this->urlParams['ReceiptHandle'];
     }
 
     /**
@@ -55,6 +57,6 @@ class ChangeMessageVisibility extends BaseRequest
      */
     public function getVisibilityTimeout()
     {
-        return $this->payload['VisibilityTimeout'];
+        return $this->urlParams['VisibilityTimeout'];
     }
 }

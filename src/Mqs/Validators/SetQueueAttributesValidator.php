@@ -6,7 +6,7 @@ namespace Mqs\Validators;
 
 use Mqs\Requests\SetQueueAttributes;
 
-class SetQueueAttrValidator extends QueueValidator
+class SetQueueAttributesValidator extends QueueValidator
 {
     /**
      * @param SetQueueAttributes $req

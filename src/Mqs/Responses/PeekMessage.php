@@ -1,12 +1,11 @@
 <?php
-// baocaixiong 下午5:52
+// baocaixiong 下午3:55
 
 namespace Mqs\Responses;
-
 use Mqs\Traits\Message;
 
 
-class ReceiveMessage extends BaseResponse
+class PeekMessage extends BaseResponse
 {
     use Message;
 

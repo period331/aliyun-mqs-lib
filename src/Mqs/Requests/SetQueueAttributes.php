@@ -9,16 +9,25 @@ class SetQueueAttributes extends BaseRequest
     protected $payload = [
         'DelaySeconds' => 0,
         'MaximumMessageSize' => 65536,
-        'MessageRetentionPeriod' => 8,
+        'MessageRetentionPeriod' => 345600,
         'VisibilityTimeout' => 30,
         'PollingWaitSeconds' => 0
     ];
 
     protected $method = 'PUT';
 
+    protected $expectedStatus = [200, 204];
+
     protected $urlParams = [
         'metaoverride' => 'true'
     ];
+
+    public function __construct($queueName)
+    {
+        $this->queueName = $queueName;
+
+        $this->requestResource = '/'.$queueName;
+    }
 
     /**
      * @param int $seconds

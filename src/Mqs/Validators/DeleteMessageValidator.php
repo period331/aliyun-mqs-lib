@@ -8,7 +8,11 @@ use Mqs\Requests\DeleteMessage;
 
 class DeleteMessageValidator extends MessageValidator
 {
-    public static function validate(DeleteMessage $req)
+    /**
+     * @param DeleteMessage $req
+     * @throws \Mqs\Exceptions\ParameterException
+     */
+    public static function validate($req)
     {
         parent::validate($req);
 

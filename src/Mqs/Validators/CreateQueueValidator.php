@@ -9,7 +9,11 @@ use Mqs\Requests\CreateQueue;
 
 class CreateQueueValidator extends QueueValidator
 {
-    public static function validate(CreateQueue $req)
+    /**
+     * @param CreateQueue $req
+     * @throws ParameterException
+     */
+    public static function validate($req)
     {
         parent::validate($req);
 

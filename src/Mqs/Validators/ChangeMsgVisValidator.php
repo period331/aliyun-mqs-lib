@@ -9,7 +9,11 @@ use Mqs\Requests\ChangeMessageVisibility;
 
 class ChangeMsgVisValidator extends MessageValidator
 {
-    public static function validate(ChangeMessageVisibility $req)
+    /**
+     * @param ChangeMessageVisibility $req
+     * @throws ParameterException
+     */
+    public static function validate($req)
     {
         parent::validate($req);
 

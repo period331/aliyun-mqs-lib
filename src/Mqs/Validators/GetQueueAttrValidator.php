@@ -8,7 +8,11 @@ use Mqs\Requests\GetQueueAttributes;
 
 class GetQueueAttrValidator extends QueueValidator
 {
-    public static function validate(GetQueueAttributes $req)
+    /**
+     * @param GetQueueAttributes $req
+     * @throws \Mqs\Exceptions\ParameterException
+     */
+    public static function validate($req)
     {
         parent::validate($req);
 

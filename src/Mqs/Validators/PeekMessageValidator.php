@@ -8,7 +8,11 @@ use Mqs\Requests\PeekMessage;
 
 class PeekMessageValidator extends MessageValidator
 {
-    public static function validate(PeekMessage $req)
+    /**
+     * @param PeekMessage $req
+     * @throws \Mqs\Exceptions\ParameterException
+     */
+    public static function validate($req)
     {
         parent::validate($req);
 

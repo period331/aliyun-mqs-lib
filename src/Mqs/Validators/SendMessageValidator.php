@@ -9,7 +9,11 @@ use Mqs\Requests\SendMessage;
 
 class SendMessageValidator extends MessageValidator
 {
-    public static function validate(SendMessage $req)
+    /**
+     * @param SendMessage $req
+     * @throws ParameterException
+     */
+    public static function validate($req)
     {
         self::queueNameValidate($req->getQueueName());
 

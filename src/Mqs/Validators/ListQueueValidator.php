@@ -8,7 +8,11 @@ use Mqs\Requests\ListQueue;
 
 class ListQueueValidator extends QueueValidator
 {
-    public static function validate(ListQueue $req)
+    /**
+     * @param ListQueue $req
+     * @throws \Mqs\Exceptions\ParameterException
+     */
+    public static function validate($req)
     {
         parent::validate($req);
 

@@ -8,7 +8,11 @@ use Mqs\Requests\ReceiveMessage;
 
 class ReceiveMessageValidator extends MessageValidator
 {
-    public static function validate(ReceiveMessage $req)
+    /**
+     * @param ReceiveMessage $req
+     * @throws \Mqs\Exceptions\ParameterException
+     */
+    public static function validate($req)
     {
         parent::validate($req);
 

@@ -8,7 +8,11 @@ use Mqs\Requests\DeleteQueue;
 
 class DeleteQueueValidator extends QueueValidator
 {
-    public static function validate(DeleteQueue $req)
+    /**
+     * @param DeleteQueue $req
+     * @throws \Mqs\Exceptions\ParameterException
+     */
+    public static function validate($req)
     {
         parent::validate($req);
 

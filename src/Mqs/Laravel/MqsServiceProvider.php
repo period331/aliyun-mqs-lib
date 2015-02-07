@@ -18,7 +18,7 @@ class MqsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('baocaixiong/mqs');
+        $this->package('baocaixiong/aliyun-mqs-lib');
     }
 
     /**

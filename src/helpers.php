@@ -44,6 +44,30 @@ if (! function_exists('class_basename')) {
     }
 }
 
-if (! function_exists('object2array')) {
+if (! function_exists('setter_construct')) {
 
+    /**
+     * @param $object
+     * @return callable
+     */
+    function setter_construct($object)
+    {
+        $construct = function (array $attributes) {
+            $this->attributes = $attributes;
+
+            foreach ($attributes as $key => $value) {
+                $setter = 'set'.studly_case($key);
+
+                if (method_exists($this, $setter)) {
+                    $this->$setter($value);
+                } elseif (property_exists($this, $pro = camel_case($key))) {
+                    $this->$pro = $value;
+                }
+            }
+        };
+
+        $construct->bindTo($object);
+
+        return $construct;
+    }
 }

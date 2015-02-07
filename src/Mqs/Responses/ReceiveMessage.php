@@ -19,4 +19,12 @@ class ReceiveMessage extends BaseResponse
     {
         return $this->stats == 404;
     }
+
+    /**
+     * @return \Mqs\Message
+     */
+    public function getMessage()
+    {
+        return new \Mqs\Message($this->arrayBody);
+    }
 }

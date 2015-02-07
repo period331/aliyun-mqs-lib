@@ -6,6 +6,8 @@ namespace Mqs\Traits;
 
 trait Queue
 {
+    public $attributes = [];
+
     protected $activeMessages = -1;
 
     protected $createTime = -1;
@@ -29,18 +31,6 @@ trait Queue
     protected $visibilityTimeout = -1;
 
     protected $queueURL = '';
-
-    /**
-     * @param array $attributes
-     */
-    public function construct(array $attributes)
-    {
-        foreach ($attributes as $key => $value) {
-            if (property_exists($this, $pro = camel_case($key))) {
-                $this->$pro = $value;
-            }
-        }
-    }
 
     /**
      * @return int

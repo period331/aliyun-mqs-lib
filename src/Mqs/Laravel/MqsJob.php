@@ -84,6 +84,6 @@ class MqsJob extends Job
      */
     public function getRawBody()
     {
-        return $this->job->getRawBody();
+        return json_encode($this->job->attributes);
     }
 }

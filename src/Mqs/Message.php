@@ -1,13 +1,13 @@
 <?php
-// baocaixiong 下午3:23
+// baocaixiong 下午4:12
 
 namespace Mqs;
 
-use Mqs\Traits\Queue as QueueTrait;
+use Mqs\Traits\Message as MessageTrait;
 
-class Queue
+class Message
 {
-    use QueueTrait;
+    use MessageTrait;
 
     /**
      * @param array $attributes

@@ -33,4 +33,12 @@ trait Object
             }
         }
     }
+
+    /**
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
 }

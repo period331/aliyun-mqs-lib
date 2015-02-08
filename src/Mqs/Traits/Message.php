@@ -6,7 +6,6 @@ namespace Mqs\Traits;
 
 trait Message
 {
-    use Object;
     /**
      * @var string
      */

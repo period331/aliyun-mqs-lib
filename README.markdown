@@ -2,6 +2,12 @@
 
 阿里云MQS队列服务PHP非官方SDK。
 
+## 安装
+
+使用composer安装
+
+    > "baocaixiong/aliyun-mqs-lib": "dev-master"
+
 ## 使用
 
 暂时只针对`laravel4.2`版本，其他环境请自看phpunit测试。

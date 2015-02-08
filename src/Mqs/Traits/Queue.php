@@ -8,8 +8,6 @@ trait Queue
 {
     use Object;
 
-    public $attributes = [];
-
     protected $activeMessages = -1;
 
     protected $createTime = -1;

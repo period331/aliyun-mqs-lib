@@ -7,9 +7,6 @@ namespace Mqs\Traits;
 trait Message
 {
     use Object;
-
-    public $attributes = [];
-
     /**
      * @var string
      */

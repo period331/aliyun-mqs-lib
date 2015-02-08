@@ -86,4 +86,19 @@ class MqsJob extends Job
     {
         return json_encode($this->job->attributes);
     }
+
+    /**
+     * Delete the job from the queue.
+     *
+     * @return void
+     */
+    public function delete()
+    {
+        parent::delete();
+
+        $req = new DeleteMessage($this->queue);
+        $req->setReceiptHandle($this->job->getReceiptHandle());
+
+        $req->send();
+    }
 }

@@ -137,7 +137,7 @@ abstract class BaseRequest
     {
         if ($xml = simplexml_load_string($response->body)) {
             if ($xml->getName() == 'Error') {
-                throw new RequestException('RequestError', $xml->Message->__toString().
+                throw new RequestException('RequestError', class_basename(get_called_class()).': '.$xml->Message->__toString().
                     '; RequestPayload:'.json_encode($this->payload).'; UrlParams:'.json_encode($this->urlParams)
                 );
             }

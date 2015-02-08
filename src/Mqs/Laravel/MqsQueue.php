@@ -129,4 +129,9 @@ class MqsQueue extends Queue implements QueueInterface
     {
         return $queue ?: $this->default;
     }
+
+    public function connect()
+    {
+        return $this;
+    }
 }

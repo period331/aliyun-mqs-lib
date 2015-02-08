@@ -7,7 +7,7 @@ use Mqs\Exceptions\ParameterException;
 use Mqs\Requests\ListQueue;
 
 
-class ValidatorBase
+class BaseValidator
 {
     public static function validateString($item)
     {

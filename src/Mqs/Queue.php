@@ -14,7 +14,6 @@ class Queue
      */
     public function __construct(array $attributes)
     {
-        $con = setter_construct($this);
-        $con($attributes);
+        $this->setterConstruct($attributes);
     }
 }

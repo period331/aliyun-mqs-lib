@@ -6,6 +6,8 @@ namespace Mqs\Traits;
 
 trait Queue
 {
+    use Object;
+
     public $attributes = [];
 
     protected $activeMessages = -1;

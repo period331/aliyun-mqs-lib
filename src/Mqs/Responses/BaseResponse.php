@@ -6,9 +6,11 @@ namespace Mqs\Responses;
 use Httpful\Response;
 use LSS\XML2Array;
 use Mqs\Requests\BaseRequest;
+use Mqs\Traits\Object;
 
 class BaseResponse
 {
+    use Object;
     /**
      * @var int
      */
@@ -60,14 +62,7 @@ class BaseResponse
 
         $this->parseResBody();
 
-        foreach ($this->arrayBody as $key => $value) {
-            $setter = 'set'.$key;
-            if (method_exists($this, $setter)) {
-                $this->$setter($value);
-            } elseif (property_exists($this, $pro = camel_case($key))) {
-                $this->$pro = $value;
-            }
-        }
+        $this->setterConstruct($this->arrayBody);
     }
 
     /**

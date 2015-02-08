@@ -5,7 +5,7 @@ namespace Mqs\Validators;
 use Mqs\Requests\BaseRequest;
 
 
-class QueueValidator extends ValidatorBase
+class QueueValidator extends BaseValidator
 {
     /**
      * @param BaseRequest $req

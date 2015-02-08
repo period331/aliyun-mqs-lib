@@ -6,7 +6,7 @@ namespace Mqs\Validators;
 
 use Mqs\Exceptions\ParameterException;
 
-class MessageValidator extends ValidatorBase
+class MessageValidator extends BaseValidator
 {
     public static function receiptHandleValidate($handler)
     {

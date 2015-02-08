@@ -2,9 +2,15 @@
 
 namespace Mqs\Responses;
 
+use Mqs\Requests\CreateQueue as CreateQueueReq;
 
 class CreateQueue extends BaseResponse
 {
+    /**
+     * @var CreateQueueReq
+     */
+    protected $request;
+
     /**
      * @return int
      */

@@ -1,6 +1,11 @@
 {
     "name": "baocaixiong/aliyun-mqs-lib",
     "type": "library",
+    "description": "aliyun mqs service php sdk",
+    "keywords": [
+        "aliyun",
+        "mqs"
+    ],
     "license": "MIT",
     "require": {
         "nategood/httpful": "0.2.*",

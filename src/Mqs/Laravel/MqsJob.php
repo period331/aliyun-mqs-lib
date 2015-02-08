@@ -7,6 +7,7 @@ use Illuminate\Container\Container;
 use Illuminate\Queue\Jobs\Job;
 use Mqs\Message;
 use Mqs\Requests\ChangeMessageVisibility;
+use Mqs\Requests\DeleteMessage;
 
 class MqsJob extends Job
 {

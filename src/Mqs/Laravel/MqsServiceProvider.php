@@ -6,8 +6,7 @@ namespace Mqs\Laravel;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Config\Repository;
-use Mqs\Laravel\MqsQueue;
-use Mqs\Account
+use Mqs\Account;
 
 
 class MqsServiceProvider extends ServiceProvider
@@ -29,7 +28,7 @@ class MqsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->booted(fucntion() {
+        $this->app->booted(function() {
             /**
              * @var $queueManager QueueManager
              */
@@ -51,7 +50,7 @@ class MqsServiceProvider extends ServiceProvider
                 $keepAlive = $config->get('queue.connections.mqs.keepalive', 10);
 
                 return new MqsQueue($queue, $keepAlive);
-            })
+            });
         });
         
     }

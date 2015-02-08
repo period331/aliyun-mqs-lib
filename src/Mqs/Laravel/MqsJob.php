@@ -60,7 +60,7 @@ class MqsJob extends Job
     {
         $req = new ChangeMessageVisibility($this->queue);
         $req->setReceiptHandle($this->job->getReceiptHandle());
-        $req->setVisibilityTimeout($delay);
+        $req->setVisibilityTimeout(!$delay ? 1 : $delay);
 
         /**
          * @var $res \Mqs\Responses\ChangeMessageVisibility

@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Config\Repository;
 use Mqs\Laravel\MqsQueue;
+use Mqs\Account
 
 
 class MqsServiceProvider extends ServiceProvider
@@ -28,27 +29,30 @@ class MqsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        /**
-         * @var $queueManager QueueManager
-         */
-        $queueManager = $this->app['queue'];
-
-        $queueManager->extend('mqs', function () {
-
+        $this->app->booted(fucntion() {
             /**
-             * @var $config Repository
+             * @var $queueManager QueueManager
              */
-            $config = $this->app['config'];
+            $queueManager = $this->app['queue'];
 
-            Account::init($config->get('queue.connections.mqs.host'),
-                $config->get('queue.connections.mqs.key'),
-                $config->get('queue.connections.mqs.secret')
-            );
+            $queueManager->extend('mqs', function () {
 
-            $queue = $config->get('queue.connections.mqs.queue', 'default');
-            $keepAlive = $config->get('queue.connections.mqs.keepalive', 10);
+                /**
+                 * @var $config Repository
+                 */
+                $config = $this->app['config'];
 
-            return new MqsQueue($queue, $keepAlive);
+                Account::init($config->get('queue.connections.mqs.host'),
+                    $config->get('queue.connections.mqs.key'),
+                    $config->get('queue.connections.mqs.secret')
+                );
+
+                $queue = $config->get('queue.connections.mqs.queue', 'default');
+                $keepAlive = $config->get('queue.connections.mqs.keepalive', 10);
+
+                return new MqsQueue($queue, $keepAlive);
+            })
         });
+        
     }
 }

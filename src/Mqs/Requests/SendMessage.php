@@ -26,9 +26,9 @@ class SendMessage extends BaseRequest
      * @param mixed $body
      * @return $this
      */
-    public function setMessageBody(array $body)
+    public function setMessageBody($body)
     {
-        $body = json_encode($body);
+        $body = is_array($body) ? json_encode($body) : $body;
 
         $this->payload['MessageBody'] = $body;
 

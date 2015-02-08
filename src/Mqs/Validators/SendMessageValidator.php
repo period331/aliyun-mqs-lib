@@ -25,8 +25,8 @@ class SendMessageValidator extends MessageValidator
             throw new ParameterException('MessageBodyInvalid', 'Bad value: "", message body should not be None.');
         }
 
-        if ($delaySeconds != -1 && $delaySeconds < 0) {
-            throw new ParameterException('DelaySecondsInvalid', sprintf('Bad value: "%d", delay_seconds should larger than 0.', $delaySeconds));
+        if ($delaySeconds != -1 && $delaySeconds < 0 & $delaySeconds > 604800) {
+            throw new ParameterException('DelaySecondsInvalid', sprintf('Bad value: "%d", delay_seconds should between 0 and 604800.', $delaySeconds));
         }
 
         if ($priority != -1 && $priority < 0) {

@@ -5,6 +5,7 @@ namespace Mqs\Laravel;
 
 use Illuminate\Queue\Queue;
 use Illuminate\Queue\QueueInterface;
+use Mqs\Exceptions\RequestException;
 use Mqs\Requests\ReceiveMessage;
 use Mqs\Requests\SendMessage;
 use Mqs\Responses\SendMessage as SendMessageRes;
@@ -104,6 +105,8 @@ class MqsQueue extends Queue implements QueueInterface
      *
      * @param  string $queue
      * @return \Illuminate\Queue\Jobs\Job|null
+     * @throws RequestException
+     * @throws \Exception
      */
     public function pop($queue = null)
     {
@@ -111,10 +114,18 @@ class MqsQueue extends Queue implements QueueInterface
 
         $req->setWaitseconds($this->keepAlive);
 
-        /**
-         * @var $res ReceiveMessageRes
-         */
-        $res = $req->send();
+        try {
+            /**
+             * @var $res ReceiveMessageRes
+             */
+            $res = $req->send();
+        } catch (RequestException $e) {
+            if ($e->type == 'MessageNotExist') {
+                return null;
+            }
+
+            throw $e;
+        }
 
         if (!$res->isNotFound() and $job = $res->getMessage()) {
             return new MqsJob($this->container, $job, $queue);

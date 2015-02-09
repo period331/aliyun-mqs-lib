@@ -9,7 +9,7 @@ class CreateQueue extends BaseResponse
     /**
      * @var CreateQueueReq
      */
-    protected $request;
+    public $request;
 
     /**
      * @return int

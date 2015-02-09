@@ -41,6 +41,9 @@ class BaseResponse
      */
     public $request;
 
+    /**
+     * @var bool
+     */
     protected $isSuccess = false;
 
     /**

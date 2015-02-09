@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "nategood/httpful": "0.2.*",
-        "openlss/lib-array2xml": "dev-master",
+        "openlss/lib-array2xml": "~0.0",
         "illuminate/queue": "4.2.*"
     },
     "authors": [
@@ -23,6 +23,9 @@
         "files": [
             "src/helpers.php"
         ]
+    },
+    "config": {
+        "preferred-install": "dist"
     },
     "minimum-stability": "stable"
 }

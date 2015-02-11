@@ -6,7 +6,7 @@
 
 使用composer安装
 
-    > "baocaixiong/aliyun-mqs-lib": "dev-master"
+    "baocaixiong/aliyun-mqs-lib": "dev-master"
 
 ## 使用
 
@@ -29,4 +29,43 @@
 
 2. 添加provider, 在 `app/config/app.php`中, `providers`键中添加
 
-    > 'Mqs\Laravel\MqsServiceProvider'
+```
+   'Mqs\Laravel\MqsServiceProvider'
+```
+
+3. 使用`Cache::push('', ["x" => ""])` 推送队列数据到mqs
+
+## 单独使用
+
+### 创建Queue
+
+```
+$req = new \Mqs\Request\CreateQueue('queue-name');
+$req->setDelaySeconds(x);
+$req->setMaximumMessageSize(x);
+// 如果参数已经组好了数组可以直接通过 $req->params($parameters) 设置属性;
+$res = $req->send();
+$res->isSuccess(); // => true
+```
+
+### 发送消息
+```
+$req = new \Mqs\Request\SendMessage('queue-name');
+$req->setMessageBody(xxx);
+$req->setDelaySeconds(xxx);
+$res = $req->send();
+$res->isSuccess(); // => true 成功
+```
+
+### 接受消息
+
+```
+$req = new \Mqs\Request\ReceiveMessage('queue-name');
+$req->setWaitseconds(30);
+$res = $req->send();
+if ($res->isSuccess()) {
+    $message = $res->getMessage(); // => \Mqs\Message
+}
+$messageBody = $message->getMessageBody();
+// do something
+```

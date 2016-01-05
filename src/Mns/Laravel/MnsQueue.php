@@ -13,7 +13,7 @@ use Mns\Responses\ReceiveMessage as ReceiveMessageRes;
  * Class MqsQueue
  * @package Mns\Laravel
  */
-class MqsQueue extends Queue
+class MnsQueue extends Queue
 {
     /**
      * 默认队列名称

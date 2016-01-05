@@ -10,7 +10,9 @@
     "require": {
         "nategood/httpful": "0.2.*",
         "openlss/lib-array2xml": "~0.0",
-        "illuminate/queue": "5.2.*"
+        "jeremeamia/superclosure": "~2.2",
+        "illuminate/queue": "5.2.*",
+        "illuminate/config": "5.2.*"
     },
     "authors": [
         {

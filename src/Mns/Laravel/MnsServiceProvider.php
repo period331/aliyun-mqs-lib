@@ -8,7 +8,7 @@ use Illuminate\Config\Repository;
 use Mns\Account;
 
 
-class MqsServiceProvider extends ServiceProvider
+class MnsServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application events.
@@ -17,7 +17,7 @@ class MqsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('baocaixiong/aliyun-mqs-lib');
+        $this->package('baocaixiong/aliyun-mns-lib');
     }
 
     /**
@@ -40,15 +40,15 @@ class MqsServiceProvider extends ServiceProvider
                  */
                 $config = $this->app['config'];
 
-                Account::init($config->get('queue.connections.mqs.host'),
-                    $config->get('queue.connections.mqs.key'),
-                    $config->get('queue.connections.mqs.secret')
+                Account::init($config->get('queue.connections.mns.host'),
+                    $config->get('queue.connections.mns.key'),
+                    $config->get('queue.connections.mns.secret')
                 );
 
-                $queue = $config->get('queue.connections.mqs.queue', 'default');
-                $keepAlive = $config->get('queue.connections.mqs.keepalive', 10);
+                $queue = $config->get('queue.connections.mns.queue', 'default');
+                $keepAlive = $config->get('queue.connections.mns.keepalive', 10);
 
-                return new MqsQueue($queue, $keepAlive);
+                return new MnsQueue($queue, $keepAlive);
             });
         });
         

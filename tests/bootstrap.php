@@ -1,7 +1,7 @@
 <?php
 
 $loader = require __DIR__ . "/../vendor/autoload.php";
-$loader->addPsr4('Mqs\\', __DIR__.'/Mqs');
+$loader->addPsr4('Mns\\', __DIR__ . '/Mns');
 
 
 
@@ -13,6 +13,6 @@ if (! TEST_MQS_ACCESS_KEY || ! TEST_MQS_ACCESS_SECRET || !TEST_MQS_URL) {
     die('please set aliyun mqs key.');
 }
 
-\Mqs\Account::init(TEST_MQS_URL, TEST_MQS_ACCESS_KEY, TEST_MQS_ACCESS_SECRET);
+\Mns\Account::init(TEST_MQS_URL, TEST_MQS_ACCESS_KEY, TEST_MQS_ACCESS_SECRET);
 
 date_default_timezone_set('UTC');

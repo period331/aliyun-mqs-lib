@@ -1,16 +1,16 @@
 {
-    "name": "baocaixiong/aliyun-mqs-lib",
+    "name": "baocaixiong/aliyun-mns-lib",
     "type": "library",
-    "description": "aliyun mqs service php sdk",
+    "description": "aliyun mns service php sdk",
     "keywords": [
         "aliyun",
-        "mqs"
+        "mns"
     ],
     "license": "MIT",
     "require": {
         "nategood/httpful": "0.2.*",
         "openlss/lib-array2xml": "~0.0",
-        "illuminate/queue": "4.2.*"
+        "illuminate/queue": "5.2.*"
     },
     "authors": [
         {
@@ -19,7 +19,7 @@
         }
     ],
     "autoload": {
-        "psr-4": {"Mqs\\": "src/Mqs"},
+        "psr-4": {"Mns\\": "src/Mns"},
         "files": [
             "src/helpers.php"
         ]

@@ -3,6 +3,7 @@
 namespace Mns\Laravel;
 
 use Illuminate\Queue\Queue;
+use Illuminate\Contracts\Queue\Queue as QueueContract;
 use Mns\Exceptions\RequestException;
 use Mns\Requests\ReceiveMessage;
 use Mns\Requests\SendMessage;
@@ -13,7 +14,7 @@ use Mns\Responses\ReceiveMessage as ReceiveMessageRes;
  * Class MqsQueue
  * @package Mns\Laravel
  */
-class MnsQueue extends Queue
+class MnsQueue extends Queue implements QueueContract
 {
     /**
      * 默认队列名称

@@ -2,14 +2,14 @@
 
 <phpunit bootstrap="tests/bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="Mqs Test Suite">
-            <directory>tests/Mqs/</directory>
+        <testsuite name="Mns Test Suite">
+            <directory>tests/Mns/</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory suffix=".php">src/Mqs/</directory>
+            <directory suffix=".php">src/Mns/</directory>
         </whitelist>
     </filter>
 </phpunit>

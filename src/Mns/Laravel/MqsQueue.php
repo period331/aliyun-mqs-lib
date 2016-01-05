@@ -3,7 +3,6 @@
 namespace Mns\Laravel;
 
 use Illuminate\Queue\Queue;
-use Illuminate\Queue\QueueInterface;
 use Mns\Exceptions\RequestException;
 use Mns\Requests\ReceiveMessage;
 use Mns\Requests\SendMessage;
@@ -14,7 +13,7 @@ use Mns\Responses\ReceiveMessage as ReceiveMessageRes;
  * Class MqsQueue
  * @package Mns\Laravel
  */
-class MqsQueue extends Queue implements QueueInterface
+class MqsQueue extends Queue
 {
     /**
      * 默认队列名称
@@ -129,6 +128,8 @@ class MqsQueue extends Queue implements QueueInterface
         if (!$res->isNotFound() and $job = $res->getMessage()) {
             return new MqsJob($this->container, $job, $queue);
         }
+
+        return null;
     }
 
     /**

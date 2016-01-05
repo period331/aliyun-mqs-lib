@@ -3,7 +3,7 @@
 namespace Mns\Exceptions;
 
 
-class QueueException extends MqsException
+class QueueException extends MnsException
 {
 
 }

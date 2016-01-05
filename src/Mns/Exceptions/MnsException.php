@@ -3,7 +3,7 @@
 namespace Mns\Exceptions;
 
 
-class MqsException extends \Exception
+class MnsException extends \Exception
 {
     public $type;
 

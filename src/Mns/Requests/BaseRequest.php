@@ -160,7 +160,7 @@ abstract class BaseRequest
     protected function makePayload()
     {
         $this->payload['@attributes'] = [
-            'xmlns' => 'http://mqs.aliyuncs.com/doc/v1/'
+            'xmlns' => 'http://mns.aliyuncs.com/doc/v1/'
         ];
 
         $class = class_basename(get_called_class());
@@ -207,7 +207,7 @@ abstract class BaseRequest
             return new Response(
             sprintf(<<<EOF
 <?xml version="1.0"?>
-<Error xmlns="http://mqs.aliyuncs.com/doc/v1">
+<Error xmlns="http://mns.aliyuncs.com/doc/v1">
   <Code>%s</Code>
   <Message>%s</Message>
   <RequestId>0</RequestId>

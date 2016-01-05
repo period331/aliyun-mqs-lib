@@ -3,7 +3,7 @@
 namespace Mns\Exceptions;
 
 
-class ParameterException extends MqsException
+class ParameterException extends MnsException
 {
 
 }

@@ -127,7 +127,7 @@ class MnsQueue extends Queue implements QueueContract
         }
 
         if (!$res->isNotFound() and $job = $res->getMessage()) {
-            return new MqsJob($this->container, $job, $queue);
+            return new MnsJob($this->container, $job, $queue);
         }
 
         return null;

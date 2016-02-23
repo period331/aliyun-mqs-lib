@@ -8,7 +8,7 @@ use Mns\Message;
 use Mns\Requests\ChangeMessageVisibility;
 use Mns\Requests\DeleteMessage;
 
-class MqsJob extends Job
+class MnsJob extends Job
 {
     /**
      * @var Message

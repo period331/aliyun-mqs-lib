@@ -2,6 +2,8 @@
 
 阿里云MQS队列服务PHP非官方SDK。
 
+官方已经更新MQS为MNS服务, 更好更快更强, 且发布了最新的官方sdk,地址为: [PHP SDK_SDK使用手册_消息服务-阿里云产品文档](https://help.aliyun.com/document_detail/mns/sdk/php-sdk.html)
+
 ## 安装
 
 使用composer安装
